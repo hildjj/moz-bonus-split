@@ -15,10 +15,9 @@ for page in pdf.pages:
   d = page.getContents().getData()
   pn += 1
   # Horrible hack.  Close enough for now and seems to work.
-  m = re.findall(b'Tm\n\(([^)]+)\)Tj\n', d)
+  m = re.findall(b'Tm\n\(([^):]+):\)Tj\n', d)
   try:
-    colon = m.index(b':')
-    name = m[colon-1]
+    name = m[0]
     out = PyPDF2.PdfFileWriter()
     out.addPage(page)
     if args.secret:
